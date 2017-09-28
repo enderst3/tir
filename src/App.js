@@ -29,11 +29,23 @@ for (var i = 0; i < products.length; i++) {
   let product = products[i]
   let category = product.category
   if (category !== currentCategory) {
-    row.push(<tr><th colSpan='2'>{category}</th></tr>)
+    row.push(
+      <tr>
+        <th colSpan='2'>{category}</th>
+      </tr>
+    )
   } if (product.stocked === false) {
-    row.push(<tr style={{color: 'red'}}><td>{product.name}</td><td>{product.price}</td></tr>)
+    row.push(
+      <tr style={{color: 'red'}}>
+        <td>{product.name}</td>
+        <td>{product.price}</td>
+      </tr>)
   }
-  row.push(<tr><td>{product.name}</td><td>{product.price}</td></tr>)
+  row.push(
+    <tr>
+      <td>{product.name}</td>
+      <td>{product.price}</td>
+    </tr>)
   currentCategory = category
 }
 
