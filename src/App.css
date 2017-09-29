@@ -2,9 +2,10 @@
   text-align: center;
 }
 
-.inventoryApp{
+.inventoryApp {
   width: 40%;
-  padding: 50px;
+  /* padding-top: 10%; */
+  /* padding-left: 45%; */
 }
 
 td, th {
