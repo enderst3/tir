@@ -34,23 +34,45 @@ for (var i = 0; i < products.length; i++) {
         <th colSpan='2'>{category}</th>
       </tr>
     )
-  } if (product.stocked === false) {
+  }
+  if (product.stocked === false) {
     row.push(
-      <tr style={{color: 'red'}}>
+      <tr >
+        <td style={{color: 'red'}}>{product.name}</td>
+        <td>{product.price}</td>
+      </tr>
+    )
+  } else {
+    row.push(
+      <tr>
         <td>{product.name}</td>
         <td>{product.price}</td>
-      </tr>)
+      </tr>
+    )
   }
-  row.push(
-    <tr>
-      <td>{product.name}</td>
-      <td>{product.price}</td>
-    </tr>)
   currentCategory = category
 }
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      inStock: false
+    }
+
+    this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this)
+  }
+
+  handleOnCheckboxChange (inStock) {
+    console.log('checked')
+    // this.setState({
+    //   inStock: true
+    // })
+  }
+
   render () {
+    const inStock = this.props.inStock
+
     return (
       <div className = 'inventoryApp'>
         <input
@@ -58,7 +80,10 @@ class App extends Component {
           placeholder='Search...' />
         <p>
           <input
-            type='checkbox' />
+            checked={inStock}
+            id='checkBox'
+            type='checkbox'
+            onChange={this.handleOnCheckboxChange} />
           Only show products in stock
         </p>
         <table>
