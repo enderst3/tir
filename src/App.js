@@ -57,21 +57,19 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      inStock: false
+      inStockOnly: false
     }
 
     this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this)
   }
 
-  handleOnCheckboxChange (inStock) {
+  handleOnCheckboxChange (e) {
     console.log('checked')
-    // this.setState({
-    //   inStock: true
-    // })
+    this.setState({inStock: true})
   }
 
   render () {
-    const inStock = this.props.inStock
+    const inStockOnly = this.props.inStockOnly
 
     return (
       <div className = 'inventoryApp'>
@@ -80,7 +78,7 @@ class App extends Component {
           placeholder='Search...' />
         <p>
           <input
-            checked={inStock}
+            checked={inStockOnly}
             id='checkBox'
             type='checkbox'
             onChange={this.handleOnCheckboxChange} />
