@@ -63,9 +63,9 @@ class App extends Component {
     this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this)
   }
 
-  handleOnCheckboxChange (e) {
+  handleOnCheckboxChange () {
     console.log('checked')
-    this.setState({inStock: true})
+    this.setState({inStockOnly: !this.state.inStockOnly})
   }
 
   render () {
