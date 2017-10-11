@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
-
-const products = [
-  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
-  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
-  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
-  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
-  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
-  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
-]
+import ProductTable from './ProductTable'
+import SearchBar from './SearchBar'
 
 const compare = (recordA, recordB) => {
   if (recordA.category > recordB.category) {
@@ -21,78 +14,53 @@ const compare = (recordA, recordB) => {
   return 0
 }
 
-let row = []
-let currentCategory = null
-
-products.sort(compare)
-for (var i = 0; i < products.length; i++) {
-  let product = products[i]
-  let category = product.category
-  if (category !== currentCategory) {
-    row.push(
-      <tr>
-        <th colSpan='2'>{category}</th>
-      </tr>
-    )
-  }
-  if (product.stocked === false) {
-    row.push(
-      <tr >
-        <td style={{color: 'red'}}>{product.name}</td>
-        <td>{product.price}</td>
-      </tr>
-    )
-  } else {
-    row.push(
-      <tr>
-        <td>{product.name}</td>
-        <td>{product.price}</td>
-      </tr>
-    )
-  }
-  currentCategory = category
-}
-
 class App extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
-      inStockOnly: false
+      inStockOnlyCheck: false,
+      searchText: '',
+      data: []
     }
 
-    this.handleOnCheckboxChange = this.handleOnCheckboxChange.bind(this)
+    this.changeInStockOnlyCheck = this.changeInStockOnlyCheck.bind(this)
+    this.changeSearchText = this.changeSearchText.bind(this)
   }
 
-  handleOnCheckboxChange () {
-    console.log('checked')
-    this.setState({inStockOnly: !this.state.inStockOnly})
+  componentWillMount () {
+    this.setState({data: [
+      {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+      {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+      {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+      {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+      {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'},
+      {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'}
+    ].sort(compare)})
+  }
+
+  changeSearchText (e) {
+    this.setState({searchText: e.target.value})
+  }
+
+  changeInStockOnlyCheck () {
+    this.setState({inStockOnlyCheck: !this.state.inStockOnlyCheck})
   }
 
   render () {
-    const inStockOnly = this.props.inStockOnly
-
     return (
-      <div className = 'inventoryApp'>
-        <input
-          type='text'
-          placeholder='Search...' />
-        <p>
-          <input
-            checked={inStockOnly}
-            id='checkBox'
-            type='checkbox'
-            onChange={this.handleOnCheckboxChange} />
-          Only show products in stock
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>{row}</tbody>
-        </table>
+      <div>
+        <SearchBar
+          searchText={this.state.searchText}
+          onSearchChange={this.changeSearchText}
+          inStockOnlyCheck={this.state.inStockOnlyCheck}
+          onInStockOnlyCheckChange={this.changeInStockOnlyCheck}
+        />
+        <ProductTable
+          inStockOnlyCheck={this.state.inStockOnlyCheck}
+          searchText={this.state.searchText}
+          data={this.state.data}
+        />
       </div>
     )
   }
