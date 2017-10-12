@@ -9,6 +9,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 /* globals beforeEach describe it expect */
 
+// need to add tests for each component
+
 describe('integration testing', () => {
   let app
 
