@@ -10,9 +10,7 @@ Enzyme.configure({ adapter: new Adapter() })
 /* globals beforeEach describe it expect */
 
 describe('integration testing', () => {
-  let called
   let wrapper
-  let checkboxState = false
 
   beforeEach(() => {
     // Note : this component expects category sorted.
